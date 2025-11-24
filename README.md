@@ -1,5 +1,10 @@
 # Transrectal Ultrasound (TRUS) Image Preprocessing Pipeline
 
+### How to run
+Use Python 3.11 and other libs as mentioned in main.py. Please update input and output directories in config.yml. Make sure to add patient-wise subdirectories in the input base directories. 
+```
+python main.py --config config.yml
+```
 ### Sequence of steps in the configured pipeline
 
 1. Load → grayscale
