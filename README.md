@@ -1,5 +1,17 @@
 # Transrectal Ultrasound (TRUS) Image Preprocessing Pipeline
 
+**Purpose**
+High–dose–rate (HDR) prostate brachytherapy requires accurate intraoperative localization of needle tips in transrectal ultrasound (TRUS) images, which are often degraded by speckle noise and low contrast. We aim to design a configurable, reproducible preprocessing pipeline tailored to TRUS that improves image quality and enhances downstream needle-spot detection using a Swin UNETR-based model.
+
+**Methods**
+We developed a standalone preprocessing module that reads parameters exclusively from an external YAML configuration file (`config-imgprepro.yml`), avoiding hardcoded settings. The pipeline supports selectable noise-reduction and contrast-enhancement operators—including Gaussian filtering, anisotropic diffusion (edge-preserving), histogram equalization, and contrast-limited adaptive histogram equalization (CLAHE)—followed by intensity normalization. It automatically generates side-by-side visual composites (pre/post) for quality assurance and organizes outputs by patient ID and timestamp to facilitate auditability and batch processing. We trained a Swin UNETR model for needle-spot detection/segmentation on TRUS images with expert ground-truth masks, and performed ablations comparing: (i) no preprocessing, (ii) normalization-only baselines, and (iii) combinations of anisotropic diffusion and CLAHE. We assessed image quality with contrast-to-noise ratio (CNR) and edge-strength metrics, and evaluated detection performance using standard segmentation and detection measures (Dice score, precision, recall, and localization error).
+
+**Results**
+The proposed pipeline consistently improved TRUS image quality, increasing CNR and enhancing edge sharpness around fine, high-intensity needle structures while suppressing speckle. Among variants, anisotropic diffusion followed by CLAHE yielded the best trade-off between noise suppression and detail preservation. When used for training and inference, this preprocessing improved Swin-UNETR’s needle-spot detection—raising overlap-based metrics and reducing false positives, particularly near heterogeneous boundaries—relative to normalization-only and no-preprocessing baselines. The composite visual outputs enabled rapid human verification of parameter choices and supported reproducible experimentation.
+
+**Conclusion**
+A configuration-driven TRUS preprocessing workflow centered on anisotropic diffusion and CLAHE can materially enhance image quality and improve Swin UNETR-based needle-spot detection for HDR prostate brachytherapy. The modular design, YAML-controlled parameters, and automated visual QA make the approach practical for clinical research pipelines and scalable to larger datasets and multi-institutional studies.
+
 ### How to run
 Use Python 3.11 and other libs as mentioned in main.py. Please update input and output directories in config.yml. Make sure to add patient-wise subdirectories in the input base directories. 
 ```
