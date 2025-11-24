@@ -29,6 +29,6 @@ Here is a table focused on the image‑processing stages:
 | 6   | Threshold preview (segmentation QA) | `qa.threshold_preview.enabled: true`, `mode: "otsu"`/`"adaptive_mean"`/`"fixed"` (via `threshold_preview`) with morphological cleaning | Provides a quick binary segmentation preview on the processed image using Otsu or adaptive mean thresholding. Helpful for assessing whether the current preprocessing makes prostate or needle segmentation feasible and to tune thresholding strategies. |
 | 7   | Ablation variants generation  | `ablation.enabled: true`, `ablation_variants: ["raw","norm_only","adiff","adiff+clahe","gauss+clahe"]` (via `generate_variants`) | Systematically generates alternative preprocessing variants per image (e.g., with/without anisotropic diffusion or CLAHE, or substituting Gaussian for anisotropic). Then compare their CNR and edge strength to understand which steps truly help TRUS HDR tasks. These are for analysis, not the “official” pipeline output. |
 
-### Output sample:
+### Output sample: After Anisotropic Diffusion
 
 <img width="613" height="409" alt="image" src="https://github.com/user-attachments/assets/ff8f32d9-38be-4c1c-8adc-50112546a6ec" />
