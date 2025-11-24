@@ -1,0 +1,81 @@
+general:
+  # Input dataset: expects per-patient subdirectories under input_dir containing images
+  input_dir: "C:/HDR-MODEL/input"
+  # Root for all outputs
+  output_root: "C:/HDR-MODEL/preprocessed"
+  timestamp: "auto"
+
+  # Convert RGB TRUS to grayscale
+  to_grayscale: true
+
+  # Allowed image extensions
+  allowed_img_exts: [".png", ".jpg", ".jpeg"]
+
+# Optional masks for metrics and overlays
+masks:
+  enabled: true
+  masks_dir: "C:/HDR-MODEL/masks"  
+  mapping: "prefix"                 
+  mask_prefix: "gt_"                
+  mask_suffix: ""                   
+  pattern: "^trus_(.*)$"
+  replace: "gt_\\1"
+
+# Main preprocessing pipeline
+pipeline:
+  normalization:
+    # minmax or zscore
+    method: "minmax"
+    percentiles: [1.0, 99.0]
+
+  noise_reduction:
+    # none | gaussian | anisotropic
+    method: "anisotropic"
+    # For gaussian:
+    sigma: 1.0
+    # For anisotropic:
+    niter: 15
+    k: 0.05
+    gamma: 0.2
+    option: 1
+
+  contrast_enhancement:
+    # none | hist_eq | clahe
+    method: "clahe"
+    clip_limit: 0.01
+    nbins: 256
+
+  # Apply a final min-max normalization to [0,1]
+  final_minmax: true
+
+# QA and visualization
+qa:
+  # Generate composite images (raw vs processed, zoom, histograms, difference)
+  generate_composites: true
+  add_hist: true
+  hist_bins: 64
+  zoom_from_mask: true
+  cmap: "gray"
+
+  # Visualize only the highest slice per patient by default
+  visualize_all_images: false
+
+  # Optional threshold preview on the processed image
+  threshold_preview:
+    enabled: true
+    mode: "otsu"       # otsu | adaptive_mean | fixed
+    sigma: 3.0         # for adaptive_mean
+    offset: 0.0
+    min_size: 10
+
+# Ablation controls
+ablation:
+  enabled: true
+
+# Which ablation variants to generate (if ablation.enabled)
+ablation_variants:
+  - raw
+  - norm_only
+  - adiff
+  - adiff+clahe
+  - gauss+clahe
