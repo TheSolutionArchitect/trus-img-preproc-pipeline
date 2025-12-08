@@ -1,5 +1,7 @@
 # Transrectal Ultrasound (TRUS) Image Preprocessing Pipeline
 
+# Abstract
+
 **Purpose**
 High–dose–rate (HDR) prostate brachytherapy requires accurate intraoperative localization of needle tips in transrectal ultrasound (TRUS) images, which are often degraded by speckle noise and low contrast. We aim to design a configurable, reproducible preprocessing pipeline tailored to TRUS that improves image quality and enhances downstream needle-spot detection using a Swin UNETR-based model.
 
