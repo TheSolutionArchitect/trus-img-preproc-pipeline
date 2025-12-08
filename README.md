@@ -12,11 +12,15 @@ The proposed pipeline consistently improved TRUS image quality, increasing CNR a
 **Conclusion**
 A configuration-driven TRUS preprocessing workflow centered on anisotropic diffusion and CLAHE can materially enhance image quality and improve Swin UNETR-based needle-spot detection for HDR prostate brachytherapy. The modular design, YAML-controlled parameters, and automated visual QA make the approach practical for clinical research pipelines and scalable to larger datasets and multi-institutional studies.
 
-### How to run
+### How to run the pipeline
 Use Python 3.11 and other libs as mentioned in main.py. Please update the input and output directories in config.yml. Make sure to add patient-wise subdirectories in the input base directories. 
 ```
 python main.py --config config.yml
 ```
+
+### Output sample: After Anisotropic Diffusion
+<img width="613" height="409" alt="image" src="https://github.com/user-attachments/assets/ff8f32d9-38be-4c1c-8adc-50112546a6ec" />
+
 ### Sequence of steps in the configured pipeline
 
 1. Load → grayscale
@@ -41,6 +45,3 @@ Here is a table focused on the image‑processing stages:
 | 6   | Threshold preview (segmentation QA) | `qa.threshold_preview.enabled: true`, `mode: "otsu"`/`"adaptive_mean"`/`"fixed"` (via `threshold_preview`) with morphological cleaning | Provides a quick binary segmentation preview on the processed image using Otsu or adaptive mean thresholding. Helpful for assessing whether the current preprocessing makes prostate or needle segmentation feasible and to tune thresholding strategies. |
 | 7   | Ablation variants generation  | `ablation.enabled: true`, `ablation_variants: ["raw","norm_only","adiff","adiff+clahe","gauss+clahe"]` (via `generate_variants`) | Systematically generates alternative preprocessing variants per image (e.g., with/without anisotropic diffusion or CLAHE, or substituting Gaussian for anisotropic). Then compare their CNR and edge strength to understand which steps truly help TRUS HDR tasks. These are for analysis, not the “official” pipeline output. |
 
-### Output sample: After Anisotropic Diffusion
-
-<img width="613" height="409" alt="image" src="https://github.com/user-attachments/assets/ff8f32d9-38be-4c1c-8adc-50112546a6ec" />
