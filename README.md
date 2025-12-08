@@ -34,7 +34,7 @@ python main.py --config config.yml
 
 Here is a table focused on the image‑processing stages:
 
-| Seq | Stage (conceptual)            | Method (from config/code)                                                                 | Significance for TRUS HDR brachy preprocessing |
+| Seq | Stage (conceptual)            | Method (from config/code)                                                                 | Significance for TRUS HDR brachytherapy preprocessing |
 |-----|-------------------------------|-------------------------------------------------------------------------------------------|-----------------------------------------------|
 | 0   | Image loading & grayscale     | `cv2.imread` + `cv2.cvtColor(..., COLOR_BGR2GRAY)` when `general.to_grayscale: true`     | Forces all TRUS images to a single gray channel with consistent intensity format, regardless of input RGB/PNG encoding. This avoids channel‑wise variability and is appropriate because B‑mode TRUS is intrinsically grayscale. |
 | 1   | Initial intensity normalization | `pipeline.normalization.method: "minmax"` with `percentiles: [1.0, 99.0]` (via `normalize_image`) | Robustly scales intensities to [0,1] using 1st–99th percentiles, reducing the effect of outliers (e.g. very bright needle tips or artifacts). This makes different patients/slices comparable and stabilizes subsequent denoising and contrast steps. |
