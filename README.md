@@ -12,7 +12,7 @@ The proposed pipeline consistently improved TRUS image quality, increasing CNR a
 **Conclusion**
 A configuration-driven TRUS preprocessing workflow centered on anisotropic diffusion and CLAHE can materially enhance image quality and improve Swin UNETR-based needle-spot detection for HDR prostate brachytherapy. The modular design, YAML-controlled parameters, and automated visual QA make the approach practical for clinical research pipelines and scalable to larger datasets and multi-institutional studies.
 
-### How to run the pipeline
+### How to run the pipeline?
 Use Python 3.11 and other libs as mentioned in main.py. Please update the input and output directories in config.yml. Make sure to add patient-wise subdirectories in the input base directories. 
 ```
 python main.py --config config.yml
